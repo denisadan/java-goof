@@ -21,9 +21,11 @@ spec:
         imagePullPolicy: Always
         name: java-goof
         securityContext:
-          runAsNonRoot: true
           runAsUser: 65534 #nobody
           runAsGroup: 65534 #nobody
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+          runAsNonRoot: true
       restartPolicy: Always
 ---
 apiVersion: v1
@@ -34,6 +36,7 @@ metadata:
   name: goof
 spec:
   type: LoadBalancer
+  loadBalancerSourceRanges: { }
   ports:
     - port: 80
       protocol: TCP

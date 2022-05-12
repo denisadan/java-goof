@@ -7,6 +7,7 @@ metadata:
   name: goof
   namespace: default
 spec:
+  loadBalancerSourceRanges: {}
   replicas: 1
   selector:
     matchLabels:
@@ -17,11 +18,16 @@ spec:
         app: goof
     spec:
       containers:
+        resources :
+          limits :
+            cpu : 250
       - image: ${DOCKER_ACCOUNT}/java-goof:latest
         imagePullPolicy: Always
         name: java-goof
         securityContext:
           readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+          runAsNonRoot: true
         volumeMounts:
           - mountPath: /usr/local/tomcat/temp
             name: tomcat-temp
